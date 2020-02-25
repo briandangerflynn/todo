@@ -1,5 +1,6 @@
 <h1>Tasks</h1>
 <%= link_to "To Do", tasks_path %>
+<%= link_to "Done", tasks_path(completed: true) %>
 <%= link_to "All Tasks", tasks_path(view_all: true) %>
 <table>
   <thead>

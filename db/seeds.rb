@@ -7,3 +7,10 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+user = User.create(name: "Brian", password: "12345")
+
+list = user.lists.create(title: "Test List")
+
+list.tasks.create(name: "Test Task", completed: false)
+

@@ -2,13 +2,16 @@
 
 class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
+  before_action :set_list, only: %i[index new create]
 
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.where(completed: false)
+    @tasks = @list.tasks.where(completed: false)
     if params[:view_all] 
-      @tasks = Task.all
+      @tasks = @list.tasks
+    elsif params[:completed]
+      @tasks = @list.tasks.where(completed: true)
     end
   end
 
@@ -18,7 +21,7 @@ class TasksController < ApplicationController
 
   # GET /tasks/new
   def new
-    @task = Task.new
+    @task = @list.tasks.new
   end
 
   # GET /tasks/1/edit
@@ -27,11 +30,11 @@ class TasksController < ApplicationController
   # POST /tasks
   # POST /tasks.json
   def create
-    @task = Task.new(task_params)
+    @task = @list.task.new(task_params)
 
     respond_to do |format|
       if @task.save
-        format.html { redirect_to tasks_path, notice: 'Task was successfully created.' }
+        format.html { redirect_to list_tasks_path(@list, @task), notice: 'Task was successfully created.' }
         format.json { render :show, status: :created, location: @task }
 
       else
@@ -70,6 +73,10 @@ class TasksController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_task
     @task = Task.find(params[:id])
+  end
+
+  def set_list
+    @list = List.find(params[:list_id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
