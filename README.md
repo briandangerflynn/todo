@@ -1,20 +1,28 @@
 Ruby Developer Homework
 ================
 
-To complete this homework, you will work on a simple Todo app in Rails. Our expectation is that you timebox the effort to 2 to 4 hours. You may work on any of the stories in the list below, but you are not expected to complete them all. Code quality is more important than quantity, we are more interested in how you approach the problems than how many you solve. Some of the user stories are ambiguous, there are many acceptable solutions, use your judgement. Frontend improvements are welcome, but optional.
-
-You may be asked to explain your work and pair with a Contently engineer to further enhance the app.
-
-To submit your homework, please update this README with information about which stories you completed, and submit the app as a zip file.
-
-User stories to implement
+Completed User Stories
 ----------------
  - A user should not be able to complete a task when creating it.
+>I changed the `complete` input field from a `check_box` to a hidden field that defaulted as "false", so that users wouldn't have the option to make tasks complete during creation.
+
  - A user can filter their view by complete or incomplete tasks.
+>I created some links and set params to them that I used as conditional logic in the controller which determines what tasks to show based on completeness.
+
  - A user's default view is filtered to show only incomplete tasks.
+ >In the above step, I made incomplete tasks the default logic.
+
  - A user should be able to keep multiple lists.
+ >I created a `List` model and made tasks belong to a list.
+
  - A user should have access to only their tasks. (may require devise or a creative, lightweight auth system)
+>I added a `User` model and made lists belong to users (and tasks belong to users through lists). I used `bcrypt` to create simple authentication and sessions.
+ 
  - A user viewing a task should see a history of all its changes. (task audit trail)
+ >I've never done this before, so this was a fun challenge. I found a gem called `audited` and added it to my gem file, then made an `Audit` table. Then I added audits to the show page for each task. 
+
+Incomplete User Stories
+----------------
  - A user should be able to see a history of all completed tasks and associated actions. (app audit trail)
 
 Cleanup tasks
