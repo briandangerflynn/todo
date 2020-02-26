@@ -2,7 +2,7 @@
 
 class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
-  before_action :set_list, only: %i[index new create]
+  before_action :set_list
 
   # GET /tasks
   # GET /tasks.json
@@ -17,7 +17,9 @@ class TasksController < ApplicationController
 
   # GET /tasks/1
   # GET /tasks/1.json
-  def show; end
+  def show
+    @audits = @task.audits
+  end
 
   # GET /tasks/new
   def new
@@ -30,8 +32,7 @@ class TasksController < ApplicationController
   # POST /tasks
   # POST /tasks.json
   def create
-    @task = @list.task.new(task_params)
-
+    @task = @list.tasks.new(task_params)
     respond_to do |format|
       if @task.save
         format.html { redirect_to list_tasks_path(@list, @task), notice: 'Task was successfully created.' }
@@ -49,7 +50,7 @@ class TasksController < ApplicationController
   def update
     respond_to do |format|
       if @task.update(task_params)
-        format.html { redirect_to tasks_path, notice: 'Task was successfully updated.' }
+        format.html { redirect_to list_tasks_path(@list), notice: 'Task was successfully updated.' }
         format.json { render :show, status: :ok, location: @task }
       else
         format.html { render :edit }
@@ -63,7 +64,7 @@ class TasksController < ApplicationController
   def destroy
     @task.destroy
     respond_to do |format|
-      format.html { redirect_to tasks_url, notice: 'Task was successfully destroyed.' }
+      format.html { redirect_to list_tasks_path(@list), notice: 'Task was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

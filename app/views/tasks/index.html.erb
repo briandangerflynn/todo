@@ -1,7 +1,7 @@
-<h1>Tasks</h1>
-<%= link_to "To Do", tasks_path %>
-<%= link_to "Done", tasks_path(completed: true) %>
-<%= link_to "All Tasks", tasks_path(view_all: true) %>
+<h1><%= @list.title %> &mdash; Tasks</h1>
+<%= link_to "To Do", list_tasks_path %>
+<%= link_to "Done", list_tasks_path(completed: true) %>
+<%= link_to "All Tasks", list_tasks_path(view_all: true) %>
 <table>
   <thead>
     <tr>
@@ -22,17 +22,23 @@
           <%= task.completed %>
         </td>
         <td>
-          <%= link_to 'Show', task %>
+          <%= link_to 'Show', list_task_path(@list,task) %>
         </td>
         <td>
-          <%= link_to 'Edit', edit_task_path(task) %>
+          <%= link_to 'Edit', edit_list_task_path(@list, task) %>
         </td>
         <td>
-          <%= link_to 'Destroy', task, :method => :delete, :data => { :confirm => 'Are you sure?' } %>
+          <%= link_to 'Destroy', [@list, task], :class => "destroy", :method => :delete, :data => { :confirm => 'Are you sure?' } %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+    <% if @tasks.length == 0 %>
+      <p><i>This task list is currently empty</i></p>
+    <% end %>
 <br/>
-<%= link_to 'Add a task', new_task_path %>
+<%= link_to 'Add a task', new_list_task_path(@list) %>
+<%= link_to 'Back to Lists', lists_path %><br><br>
+<%= link_to 'Destroy List', @list, :class => "destroy", :method => :delete, :data => { :confirm => 'Are you sure?' } %>
+

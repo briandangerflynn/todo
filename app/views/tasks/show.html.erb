@@ -1,0 +1,30 @@
+<p>
+  <b>Name:</b>
+  <%= @task.name %>
+</p>
+<p>
+  <b>Completed:</b>
+  <%= @task.completed %>
+</p>
+<p>
+  <b>Audit Trail &mdash; Name Changes</b><br>
+  <% @audits.each do |audit| %>
+    <% if !audit.audited_changes["name"].blank? %>
+      version: <%= audit.version%><br>
+      <%= audit.audited_changes["name"] %><br>
+    <% end %>
+  <% end %>
+</p>
+<p>
+  <b>Audit Trail &mdash; Completed Changes</b><br>
+  <% @audits.each do |audit| %>
+    <% if !audit.audited_changes["completed"].blank? %>
+      version: <%= audit.version%><br>
+      <%= audit.audited_changes["completed"] %><br>
+    <% end %>
+  <% end %>
+</p>
+
+
+<%= link_to 'Edit', edit_list_task_path(@list, @task) %>
+<%= link_to 'Back', list_tasks_path(@list) %>

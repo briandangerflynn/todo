@@ -1,3 +1,12 @@
+<h3><%= current_user.name %>'s Task Lists: </h3>
+
 <% @lists.each do |list|%>
-  <p><%= list.title %></p>
+  <%= link_to list.title, list_tasks_path(list) %><br>
 <% end %>
+
+<br>
+<br>
+<div>
+  <%= link_to "Create New List", new_list_path %>
+</div>
+
